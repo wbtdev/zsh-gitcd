@@ -13,12 +13,11 @@ $ gitcd <repo-url> (optional <branch>)
 Example:
 
 ```sh
-$ gitcd https://github.com/wbtdev/gitcd.plugin.zsh.git
-# => will git clone and cd to "~/src/github.com/wbtdev/gitcd.plugin.zsh"
+$ gitcd https://github.com/wbtdev/zsh-gitcd.git
+# => will git clone and cd to "~/src/github.com/wbtdev/zsh-gitcd"
 ```
 
-If the repository exists locally, it will automatically "[cd](https://en.wikipedia.org/wiki/Cd_(command))" into it.
-If you provided a branch name, it will check it out.
+If the repository exists locally, it will automatically "[cd](https://en.wikipedia.org/wiki/Cd_(command))" into it, and if you provided a branch name, it will check it out.
 
 ## Config
 
@@ -30,10 +29,4 @@ Example:
 ```sh
 $ gitcd git@github.com:zsh-users/zsh.git zsh
 # => ~/src/github.com/zsh-users/zsh on the zsh branch.
-```
-
-## Test
-
-```sh
-zsh ./test.zsh
 ```
