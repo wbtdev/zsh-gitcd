@@ -1,7 +1,0 @@
-# vim:et sts=2 sw=2 ft=zsh
-url=$1
-url=${url#*@}
-url=${url#*://}
-url=${url%.git*}
-url=${url/:/\/}
-echo $url
