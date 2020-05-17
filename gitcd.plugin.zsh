@@ -1,38 +1,26 @@
-#!/bin/sh
+# -*- mode: sh; sh-indentation: 4; indent-tabs-mode: nil; sh-basic-offset: 4; -*-
 
-gitcd() {
-  url=${1} branch=${2} basedir=$HOME/src
-  [[ -n $GITCD_HOME ]] && basedir=$GITCD_HOME
+# Copyright (c) 2020 wbtdev
 
-  if [[ -z $url ]]; then
-    print -P '%F{red}[gitcd]%f Missing Repo URL.'
-    return
-  else
-    dir=$(_giturl2dir $url) target=$basedir/$dir
-    if [[ -d $target ]]; then
-      print -P "%F{yellow}[gitcd]%f $target already exists."
-      cd $target
-      if [[ ! -z $branch ]]; then
-        print -P "%F{blue}[gitcd]%f Branch %F{green}\"$branch\"%f detected, checking it out."
-        git checkout $branch
-      fi
-    else
-      if [[ -z $branch ]]; then
-        git clone $url $target
-      else
-        git clone -b $branch $url $target
-      fi
-      cd $target
-    fi
-    print -P "%F{green}[gitcd]%f Done."
-  fi
+# According to the Zsh Plugin Standard:
+# http://zdharma.org/Zsh-100-Commits-Club/Zsh-Plugin-Standard.html
+
+0=${${ZERO:-${0:#$ZSH_ARGZERO}}:-${(%):-%N}}
+0=${${(M)0:#/*}:-$PWD/$0}
+
+# Then ${0:h} to get plugin's directory
+
+if [[ ${zsh_loaded_plugins[-1]} != */zsh-gitcd && -z ${fpath[(r)${0:h}/functions]} ]] {
+    fpath+=( "${0:h}/functions" )
 }
 
-_giturl2dir() {
-  url=$1
-  url=${url#*@}
-  url=${url#*://}
-  url=${url%.git*}
-  url=${url/:/\/}
-  echo $url
-}
+# Standard hash for plugins, to not pollute the namespace
+typeset -gA Plugins
+Plugins[ZSH_GITCD_DIR]="${0:h}"
+
+autoload -Uz gitcd
+
+# Use alternate vim marks [[[ and ]]] as the original ones can
+# confuse nested substitutions, e.g.: ${${${VAR}}}
+
+# vim:ft=zsh:tw=80:sw=4:sts=4:et:foldmarker=[[[,]]]
