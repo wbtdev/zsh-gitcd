@@ -18,7 +18,7 @@ if [[ ${zsh_loaded_plugins[-1]} != */zsh-gitcd && -z ${fpath[(r)${0:h}/functions
 typeset -gA Plugins
 Plugins[ZSH_GITCD_DIR]="${0:h}"
 
-autoload -Uz gitcd
+autoload -Uz _giturl2dir gitcd
 
 # Use alternate vim marks [[[ and ]]] as the original ones can
 # confuse nested substitutions, e.g.: ${${${VAR}}}
